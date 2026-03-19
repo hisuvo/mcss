@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String     @id @default(uuid())
+  name           String
+  storageLimitMb Int        @default(500)
+  storageUsedMb  Int        @default(0)
+  createdAt      DateTime   @default(now())
+
+  userFiles      UserFile[]
+}
+
+model File {
+  id         String     @id @default(uuid())
+  fileSize   Int
+  fileHash   String     @unique
+  createdAt  DateTime   @default(now())
+
+  userFiles  UserFile[]
+}
+
+model UserFile {
+  id         String    @id @default(uuid())
+  userId     String
+  fileId     String
+  fileName   String
+  uploadTime DateTime  @default(now())
+  isDeleted  Boolean   @default(false)
+  deletedAt  DateTime?
+  createdAt  DateTime  @default(now())
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file       File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isDeleted])
+  @@unique([userId, fileName, isDeleted])
+}
