@@ -1,41 +1,32 @@
 import { Request, Response } from "express";
 import { UserServices } from "./user.service";
-import { AppError } from "../../errorHelper/AppError";
 import status from "http-status";
+import { catchAsync } from "../../shared/catchAsync";
+import { sendResponse } from "../../shared/sendResponse";
 
-const createUser = async (req: Request, res: Response) => {
-  try {
-    const result = await UserServices.createUsers(req.body);
+const createUsers = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.createUsers(req.body);
 
-    res.status(200).json({
-      success: true,
-      message: "User create success",
-      data: result,
-    });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    throw AppError(500, error.message);
-  }
-};
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "User retrived successfully",
+    data: result,
+  });
+});
 
-const gerUsers = async (req: Request, res: Response) => {
-  try {
-    const result = await UserServices.gerUsers();
+const gerUsers = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.gerUsers();
 
-    console.log(status[400]);
-
-    res.status(status.CREATED).json({
-      success: true,
-      message: "User retrive success",
-      data: result,
-    });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    throw AppError(status.NOT_FOUND, error.message);
-  }
-};
+  sendResponse(res, {
+    httpStatusCode: status.OK,
+    success: true,
+    message: "User retrived successfully",
+    data: result,
+  });
+});
 
 export const UserController = {
-  createUser,
+  createUsers,
   gerUsers,
 };

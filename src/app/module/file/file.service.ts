@@ -3,13 +3,7 @@ import { AppError } from "../../errorHelper/AppError";
 import { prisma } from "../../lib/prisma";
 import crypto from "crypto";
 import fs from "fs";
-
-interface UploadInput {
-  userId: string;
-  fileName: string;
-  fileSizeBytes: number;
-  filePath: string;
-}
+import { UploadInput } from "./file.interface";
 
 const uploadFile = async (data: UploadInput) => {
   return await prisma.$transaction(async (tx) => {
