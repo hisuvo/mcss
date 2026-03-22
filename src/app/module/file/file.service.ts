@@ -19,10 +19,7 @@ const uploadFile = async (data: UploadInput) => {
 
     // Storage limit check
     if (user.storageUsedMb + fileSizeMb > user.storageLimitMb) {
-      throw AppError(
-        status.REQUEST_ENTITY_TOO_LARGE,
-        "Storage limit exceeded ",
-      );
+      throw AppError(status.REQUEST_ENTITY_TOO_LARGE, "Storage limit exceeded");
     }
 
     // Duplicate file name check (only active files)

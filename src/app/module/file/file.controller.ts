@@ -25,7 +25,7 @@ const uploadFile = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     httpStatusCode: status.CREATED,
     success: true,
-    message: "file upload sucessfull",
+    message: "File upload successful",
     data: result,
   });
 });
@@ -45,7 +45,7 @@ const deleteFile = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     httpStatusCode: status.CREATED,
     success: true,
-    message: "File delete sucessfull",
+    message: "File delete successful",
     data: result,
   });
 });
@@ -62,7 +62,7 @@ const getStorageSummary = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     httpStatusCode: status.CREATED,
     success: true,
-    message: "File storage summery retrived sucessfull",
+    message: "File storage summery retrieved successful",
     data: result,
   });
 });
